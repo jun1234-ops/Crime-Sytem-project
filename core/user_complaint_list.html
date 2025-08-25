@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+    }
+</style>
+<h2>All Submitted Complaints</h2>
+
+<div style="overflow-x: auto; margin-bottom: 30px;">
+    <table class="table table-striped" style="overflow-y: auto;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Complainant Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Crime Type</th>
+                <th>Crime Description</th>
+                <th>Relationship</th>
+                <th>Location</th>
+                <th>Suspect Description</th>
+                <th>Evidence</th>
+                <th>Emergency</th>
+                <th>Status</th>
+                <th>Date/Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.id }}</td>
+                <td>
+                    {% if complaint.is_anonymous %}
+                        <em>Anonymous</em>
+                    {% else %}
+                        {{ complaint.full_name }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if complaint.is_anonymous %}
+                        <em>Hidden</em>
+                    {% else %}
+                        {{ complaint.phone_number }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if complaint.is_anonymous %}
+                        <em>Hidden</em>
+                    {% else %}
+                        {{ complaint.email }}
+                    {% endif %}
+                </td>
+                <td>{{ complaint.crime_type }}</td>
+                <td>{{ complaint.crime_description }}</td>
+                <td>{{ complaint.relationship }}</td>
+                <td>{{ complaint.location }}</td>
+                <td>{{ complaint.suspect_description|default:"—" }}</td>
+                <td>
+                    {% if complaint.evidence %}
+                        <a href="{{ complaint.evidence.url }}" target="_blank">View File</a>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td>{% if complaint.is_emergency %}✅{% else %}❌{% endif %}</td>
+                <td>{{ complaint.complaint_status }}</td>
+                <td>{{ complaint.date_time_of_incident|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="13">No complaints submitted yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

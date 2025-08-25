@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        width: 100%;
+        color: #fff;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    tr{
+        cursor: pointer;
+    }
+</style>
+  <div class="ctn">
+    <div class="container mt-4">
+      <h2 class="mb-4 text-center">📋 Complaint List</h2>
+
+      <!-- Export Buttons -->
+      <div class="d-flex justify-content-end align-items-center mb-3 gap-2">
+        <a href="{% url 'export_complaints_pdf' %}" class="btn btn-danger btn-sm">📄 Export PDF</a>
+        <a href="{% url 'export_complaints_doc' %}" class="btn btn-primary btn-sm">📝 Export Word</a>
+        <a href="{% url 'export_complaints_excel' %}" class="btn btn-success btn-sm">📊 Export Excel</a>
+        <button onclick="window.print()" class="btn btn-outline-secondary btn-sm" style="height: 40px;margin-top: 14px;">🖨️ Print</button>
+      </div>
+
+      <!-- Complaint Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle table-hover">
+          <thead class="table-primary">
+            <tr>
+              <th>S/N</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Location</th>
+              <th>Relationship</th>
+              <th>Crime Type</th>
+              <th>Emergency</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for complaint in complaints %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>
+                {% if complaint.is_anonymous %}
+                  <span class="text-muted fst-italic">Anonymous</span>
+                {% else %}
+                  {{ complaint.full_name }}
+                {% endif %}
+              </td>
+              <td>
+                {% if complaint.is_anonymous %}
+                  <span class="text-muted fst-italic">Hidden</span>
+                {% else %}
+                  {{ complaint.email }}
+                {% endif %}
+              </td>
+              <td>
+                {% if complaint.is_anonymous %}
+                  <span class="text-muted fst-italic">Hidden</span>
+                {% else %}
+                  {{ complaint.phone_number }}
+                {% endif %}
+              </td>
+              <td>{{ complaint.location|default:"N/A" }}</td>
+              <td>
+                {% if complaint.is_anonymous %}
+                  <span class="text-muted">-</span>
+                {% else %}
+                  {{ complaint.relationship }}
+                {% endif %}
+              </td>
+              <td>{{ complaint.crime_type }}</td>
+              <td>
+                {% if complaint.is_emergency %}
+                  <span class="text-danger fw-bold">Yes 🚨</span>
+                {% else %}
+                  <span class="text-muted">No</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if complaint.is_anonymous %}
+                  <span class="text-muted">N/A</span>
+                {% else %}
+                  {{ complaint.complaint_status }}
+                {% endif %}
+              </td>
+              <td>
+                {% if complaint.is_anonymous %}
+                  {{ complaint.incident_datetime|date:"D, M d Y H:i" }}
+                {% else %}
+                  {{ complaint.date_time_of_incident|date:"D, M d Y H:i" }}
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url complaint.is_anonymous|yesno:'anonymous_complaint_detail,complaint_detail' complaint.id %}" 
+                  class="btn btn-sm btn-outline-info">View</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="11" class="text-center text-muted">No complaints found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

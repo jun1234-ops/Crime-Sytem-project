@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Activation Failed</h2>
+<p>The activation link is invalid or has expired.</p>
+<a href="{% url 'user_login' %}">Return to Login</a>
+{% endblock %}

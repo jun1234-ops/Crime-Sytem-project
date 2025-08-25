@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        padding: 30px 0;
+        margin-bottom: 30px;
+    }
+</style>
+    <div class="ctn">
+        <h2 class="text-center pb-4">Suspect Registration Form</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-container">
+                <div class="form-group">
+                    {{ form.full_name.label_tag }}
+                    {{ form.full_name }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.nickname.label_tag }}
+                    {{ form.nickname }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.date_of_birth.label_tag }}
+                    {{ form.date_of_birth }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.gender.label_tag }}
+                    {{ form.gender }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.address.label_tag }}
+                    {{ form.address }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.national_id.label_tag }}
+                    {{ form.national_id }}
+                </div>
+            
+                <div class="form-group">
+                    <label for="crime_type">Crime Type</label>
+                    {{ form.crime_type }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.height.label_tag }}
+                    {{ form.height }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.weight.label_tag }}
+                    {{ form.weight }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.skin_color.label_tag }}
+                    {{ form.skin_color }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.hair_color.label_tag }}
+                    {{ form.hair_color }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.picture.label_tag }}
+                    {{ form.picture }}
+                    <img id="photo-preview" src="#" alt="Photo Preview" style="display:none; max-width:200px; margin-top:10px;">
+                </div>
+
+                <div class="form-group">
+                    {{ form.known_associates.label_tag }}
+                    {{ form.known_associates }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.previous_criminal_records.label_tag }}
+                    {{ form.previous_criminal_records }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.current_status.label_tag }}
+                    {{ form.current_status }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-3">Register</button>
+            <button type="reset" class="btn btn-secondary mt-3">Reset</button>
+            <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
+        </form>
+
+        <h3 class="mt-4 text-center">Search for Suspect</h3>
+        <form method="get" action="{% url 'suspect_search' %}">
+            <input type="text" name="query" placeholder="Enter Name or ID" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+<style>
+    .form-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        color: black;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input, select, textarea {
+        padding: 6px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+    @media (max-width:768px) {
+        .ctn{
+            padding: 30px;
+        }
+    }
+</style>
+
+<script>
+    document.getElementById('id_picture').addEventListener('change', function (event) {
+        let photo = document.getElementById('photo-preview');
+        photo.style.display = 'block';
+        photo.src = URL.createObjectURL(event.target.files[0]);
+    });
+</script>
+{% endblock %}

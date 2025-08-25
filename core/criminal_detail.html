@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">📝 Criminal Record Detail</h2>
+    <div class="card shadow p-4">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                {% if criminal.photograph %}
+                    <img src="{{ criminal.photograph.url }}" class="img-fluid rounded border" alt="Criminal Photo">
+                {% else %}
+                    <div class="text-muted">No photo available</div>
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                <p><strong>Full Name:</strong> {{ criminal.full_name }}</p>
+                <p><strong>Criminal ID Number:</strong> {{ criminal.criminal_id_number }}</p>
+                <p><strong>Date of Birth:</strong> {{ criminal.date_of_birth }}</p>
+                <p><strong>Gender:</strong> {{ criminal.gender }}</p>
+                <p><strong>Address:</strong> {{ criminal.address }}</p>
+                <p><strong>Phone Number:</strong> {{ criminal.phone_number }}</p>
+                <p><strong>Email:</strong> {{ criminal.email }}</p>
+                <p><strong>Date of Conviction:</strong> {{ criminal.date_of_conviction }}</p>
+                <p><strong>Crime Type:</strong> {{ criminal.crime_type }}</p>
+                <p><strong>Sentence Details:</strong> {{ criminal.sentence_details }}</p>
+                <p><strong>Known Associates:</strong> {{ criminal.known_associates|default:"None" }}</p>
+            </div>
+        </div>
+        <a href="{% url 'criminal_list' %}" class="btn btn-secondary">⬅️ Back to List</a>
+    </div>
+</div>
+{% endblock %}

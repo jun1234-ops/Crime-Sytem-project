@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card p-4 shadow-lg rounded">
+        <h2 class="mb-4 text-center">Complaint Details</h2>
+
+        <div class="mb-3"><strong>Full Name:</strong> {{ complaint.full_name }}</div>
+        <div class="mb-3"><strong>Phone Number:</strong> {{ complaint.phone_number }}</div>
+        <div class="mb-3"><strong>Email:</strong> {{ complaint.email }}</div>
+        <div class="mb-3"><strong>Date & Time of Incident:</strong> {{ complaint.date_time_of_incident }}</div>
+        <div class="mb-3"><strong>Crime Type:</strong> {{ complaint.crime_type }}</div>
+        <div class="mb-3"><strong>Crime Description:</strong> {{ complaint.crime_description|linebreaks }}</div>
+        <div class="mb-3"><strong>Relationship:</strong> {{ complaint.relationship }}</div>
+        <div class="mb-3"><strong>Location:</strong> {{ complaint.location }}</div>
+        <div class="mb-3"><strong>Suspect Description:</strong> {{ complaint.suspect_description|default:"N/A" }}</div>
+        <div class="mb-3"><strong>Complaint Status:</strong> {{ complaint.complaint_status }}</div>
+
+        <div class="mb-3">
+            <strong>Evidence:</strong><br>
+            {% if complaint.evidence %}
+                <a href="{{ complaint.evidence.url }}" target="_blank">View Uploaded File</a>
+            {% else %}
+                No evidence uploaded.
+            {% endif %}
+        </div>
+
+        <a href="{% url 'view_my_complaints' %}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+{% endblock %}

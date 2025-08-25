@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center">📄 Complaint Detail</h2>
+        <div>
+            <a href="{% url 'export_single_complaint_pdf' complaint.id %}" class="btn btn-danger btn-sm me-2">📄 PDF</a>
+            <a href="{% url 'export_single_complaint_doc' complaint.id %}" class="btn btn-primary btn-sm me-2">📝 Word</a>
+            <a href="{% url 'export_single_complaint_excel' complaint.id %}" class="btn btn-success btn-sm me-2">📊 Excel</a>
+            <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">🖨️ Print</button>
+        </div>
+    </div>
+
+    <div class="card shadow-lg p-4 rounded-4">
+        <h5 class="mb-3 border-bottom pb-2">👤 Complainant Information</h5>
+        <div class="row mb-3">
+            <div class="col-md-6"><strong>Full Name:</strong> {{ complaint.full_name }}</div>
+            <div class="col-md-6"><strong>Email:</strong> {{ complaint.email }}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6"><strong>Phone Number:</strong> {{ complaint.phone_number }}</div>
+            <div class="col-md-6"><strong>Relationship to Suspect:</strong> {{ complaint.relationship }}</div>
+        </div>
+
+        <h5 class="mb-3 mt-4 border-bottom pb-2">🕵️ Incident Details</h5>
+        <div class="row mb-3">
+            <div class="col-md-6"><strong>Incident Date:</strong> {{ complaint.date_time_of_incident|date:"D, M d Y H:i" }}</div>
+            <div class="col-md-6"><strong>Location:</strong> {{ complaint.location }}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6"><strong>Crime Type:</strong> {{ complaint.crime_type }}</div>
+            <div class="col-md-6"><strong>Status:</strong> {{ complaint.complaint_status }}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12"><strong>Description:</strong><br> {{ complaint.crime_description }}</div>
+        </div>
+
+        <h5 class="mb-3 mt-4 border-bottom pb-2">👤 Suspect Information</h5>
+        <div class="row mb-3">
+            <div class="col-md-12"><strong>Suspect Description:</strong><br> {{ complaint.suspect_description }}</div>
+        </div>
+
+        <h5 class="mb-3 mt-4 border-bottom pb-2">📎 Evidence</h5>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                {% if complaint.evidence.name %}
+                    {% with evidence_url=complaint.evidence.url|lower %}
+                        {% if '.jpg' in evidence_url or '.jpeg' in evidence_url or '.png' in evidence_url or '.gif' in evidence_url %}
+                            <img src="{{ complaint.evidence.url }}" alt="Evidence Image" class="img-fluid rounded my-2" style="max-height: 300px;">
+                        {% elif '.mp4' in evidence_url or '.webm' in evidence_url %}
+                            <video controls class="my-2 w-100" style="max-width: 400px;">
+                                <source src="{{ complaint.evidence.url }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <a href="{{ complaint.evidence.url }}" class="btn btn-outline-secondary mt-2" download>📁 Download Evidence</a>
+                        {% endif %}
+                    {% endwith %}
+                {% else %}
+                    <span class="text-muted">None provided</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <h5 class="mb-3 mt-4 border-bottom pb-2">⚙️ Additional Info</h5>
+        <div class="row mb-3">
+            <div class="col-md-6"><strong>Emergency:</strong> {% if complaint.is_emergency %}✅ Yes{% else %}❌ No{% endif %}</div>
+            <div class="col-md-6"><strong>Preferred Response:</strong> {{ complaint.preferred_response_channel }}</div>
+        </div>
+
+        <div class="mt-4">
+            <a href="{% url 'all_complaints' %}" class="btn btn-outline-dark btn-sm">⬅ Back to Complaints</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

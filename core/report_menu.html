@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+    }
+    .card{
+        cursor: pointer;
+        box-shadow: 2px 2px 20px darkgray;
+        color: black;
+    }
+    .img-ctn{
+        overflow: hidden;
+    }
+    .img-ctn img{
+        transition: all 0.3s ease-in-out;
+        height: 200px;
+        object-fit: cover;
+    }
+    .card:hover{
+        box-shadow: 10px 10px 20px darkgray;
+    }
+    .card:hover .img-ctn img{
+        transform: scale(1.1);
+    }
+    .container{
+        gap: 1rem;
+        padding-right: 45px;
+    }
+</style>
+    <h2 class="text-center">Report Menu</h2>
+
+    {% if user.is_superuser %}
+    <!-- New Code  -->
+    <div class="ctn" style="padding: 20px;">
+        <div class="container d-flex mx-auto justify-content-center flex-wrap">
+            <div class="card mb-3 pt-2 col-12 col-md-3" style="width: 300px; padding-bottom: 10px;">
+                <h5 class="text-center">Complaint List</h5>
+                <div class="img-ctn">
+                    <img src="../../static/Reports/Images/photo-1693027986160-78f29eabc5de.avif" alt="" style="width: 100%;">
+                </div>
+                <div class="text mt-2 text-center">
+                    <p>Browse through list of Complaints</p>
+                    <a href="{% url 'all_complaints' %}">Complaint List</a>
+                </div>
+            </div>
+            <div class="card mb-3 pt-2 col-12 col-md-3" style="width: 300px; padding-bottom: 10px;">
+                <h5 class="text-center">Suspect List</h5>
+                <div class="img-ctn">
+                    <img src="../../static/Reports/Images/premium_photo-1670002244351-51860b285f4f.avif" alt="" style="width: 100%;">
+                </div>
+                <div class="text mt-2 text-center">
+                    <p>Browse through list of Suspects</p>
+                    <a href="{% url 'suspect_list' %}">Suspect List</a>
+                </div>
+            </div>
+            <div class="card mb-3 pt-2 col-12 col-md-3" style="width: 300px; padding-bottom: 10px;">
+                <h5 class="text-center">Criminal List</h5>
+                <div class="img-ctn">
+                    <img src="../../static/Reports/Images/photo-1621360359137-dfd3d5a62afe.avif" alt="" style="width: 100%;">
+                </div>
+                <div class="text mt-2 text-center">
+                    <p>Browse through list of Criminals</p>
+                    <a href="{% url 'criminal_list' %}">Criminal List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Old Code  -->
+    <!-- <li><a href="{% url 'all_complaints' %}">Complaint List</a></li>
+    <li><a href="{% url 'suspect_list' %}">Suspect List</a></li>
+     <li><a href="{% url 'criminal_list' %}">Criminal List</a></li> -->
+{% endif %}
+
+{% if not user.is_superuser %}
+    <div class="ctn" style="padding: 20px;">
+        <div class="card mb-3 pt-2 col-12 col-md-3" style="width: 300px; padding-bottom: 10px;">
+            <h5 class="text-center">Complaint List</h5>
+            <div class="img-ctn">
+                <img src="../../static/Reports/Images/photo-1693027986160-78f29eabc5de.avif" alt="" style="width: 100%;">
+            </div>
+            <div class="text mt-2 text-center">
+                <p>Browse through list of Complaints</p>
+                <a href="{% url 'user_complaint_list' %}">Complaint List</a>
+            </div>
+        </div>
+    </div>
+    <!-- <li><a href="{% url 'user_complaint_list' %}">Complaint List</a></li> -->
+{% endif %}
+
+
+{% endblock %}

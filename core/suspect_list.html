@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        width: 100%;
+        color: #fff;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    tr{
+        cursor: pointer;
+    }
+</style>
+  <div class="ctn">
+    <div class="container mt-4">
+      <h2 class="mb-4 text-center">👥 Suspect List</h2>
+      <div class="mb-3 d-flex justify-content-end gap-2">
+      <a href="{% url 'export_suspects_pdf' %}" class="btn btn-danger btn-sm">
+        📄 Export PDF
+      </a>
+      <a href="{% url 'export_suspects_word' %}" class="btn btn-secondary btn-sm">
+        📝 Export Word
+      </a>
+      <a href="{% url 'export_suspects_excel' %}" class="btn btn-success btn-sm">
+        📊 Export Excel
+      </a>
+        <button onclick="window.print()" class="btn btn-outline-secondary btn-sm" style="height: 40px;">
+            🖨️ Print
+    </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th>S/N</th>
+              <th>Full Name</th>
+              <th>Nickname</th>
+              <th>Date of Birth</th>
+              <th>Gender</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>National ID</th>
+              <th>Crime Type</th>
+              <th>Known Associates</th>
+              <th>Previous Record</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for suspect in suspects %}
+            <tr>
+              <td class="text-center">{{ forloop.counter }}</td>
+              <td>{{ suspect.full_name }}</td>
+              <td>{{ suspect.nickname }}</td>
+              <td>{{ suspect.date_of_birth }}</td>
+              <td>{{ suspect.gender }}</td>
+              <td>{{ suspect.address }}</td>
+              <td>{{ suspect.phone_number }}</td>
+              <td>{{ suspect.email }}</td>
+              <td>{{ suspect.national_id }}</td>
+              <td>{{ suspect.crime_type.crime_name|default:"N/A" }}</td>
+              <td>{{ suspect.known_associates|default:"N/A" }}</td>
+              <td>{{ suspect.previous_criminal_records|default:"N/A" }}</td>
+              <td>{{ suspect.current_status }}</td>
+              <td>
+                <a href="{% url 'suspect_detail_list' suspect.id %}" class="btn btn-sm btn-primary">View</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="14" class="text-center text-muted">No suspects found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

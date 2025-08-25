@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    button[type="submit"]{
+        width: 120px;
+    }
+    a{
+        margin-top: -15px;
+    }
+</style>
+<h2>Confirm Deletion</h2>
+<p>Are you sure you want to delete the crime type: "{{ crime.crime_name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'crime_catalog' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

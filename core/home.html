@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+    }
+    @media (max-width:575px) {
+        .container{
+            padding: 0 20px;
+            max-width: 400px;
+            margin-bottom: 50px;
+        }
+    }
+</style>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 py-3">Welcome, {{ user.username }}</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-3">
+            <a href="{% url 'file_menu' %}" class="btn btn-primary btn-block w-100 p-3">File Menu</a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="{% url 'report_menu' %}" class="btn btn-secondary btn-block w-100 p-3">Report Menu</a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="{% url 'query_menu' %}" class="btn btn-info btn-block w-100 p-3">Query Menu</a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a href="{% url 'help_menu' %}" class="btn btn-success btn-block w-100 p-3">Help Menu</a>
+        </div>
+    </div>
+</div>
+<div class="welcome-section">
+    <h2>Owerri Crime Tracking System</h2>
+    <p>Select a menu option to continue.</p>
+</div>
+{% endblock %}

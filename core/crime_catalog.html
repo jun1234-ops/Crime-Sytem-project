@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    tr{
+        cursor: pointer;
+    }
+
+</style>
+    <div class="ctn">
+        <h2>Crime Catalog</h2>
+        <a href="{% url 'add_crime' %}" class="btn btn-primary mb-3">Add New Crime Type</a>
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Crime Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for crime in crimes %}
+                <tr>
+                    <td>{{ crime.crime_name }}</td>
+                    <td>{{ crime.description }}</td>
+                    <td>
+                        <a href="{% url 'edit_crime' crime.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_crime' crime.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button onclick="window.history.back();" style="margin-top: 20px; background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
+            Back
+        </button>
+    </div>
+{% endblock %}

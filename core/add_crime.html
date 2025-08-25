@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    button[type="submit"]{
+        width: 120px;
+    }
+    a{
+        margin-top: -13px;
+    }
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        padding: 20px 0;
+        margin-bottom: 30px;
+    }
+    form{
+        color: black;
+        margin-bottom: 30px;
+    }
+    h2{
+        margin-bottom: 30px;
+    }
+</style>
+    <div class="ctn">
+        <div class="container mt-4">
+        <h2 class="text-center">Add New Crime</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div>
+                <button type="submit" class="btn btn-success">Add Crime</button>
+                <a href="{% url 'crime_catalog' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+</div>
+    </div>
+{% endblock %}

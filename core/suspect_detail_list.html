@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">👤 Suspect Details</h2>
+  <hr>
+<div class="mt-4 d-flex justify-content-start gap-2">
+  <a href="{% url 'export_suspects_pdf' %}" class="btn btn-outline-danger btn-sm">
+    📄 Export All as PDF
+  </a>
+  <a href="{% url 'export_suspects_word' %}" class="btn btn-outline-secondary btn-sm">
+    📝 Export All as Word
+  </a>
+  <a href="{% url 'export_suspects_excel' %}" class="btn btn-outline-success btn-sm">
+    📊 Export All as Excel
+  </a>
+    <button onclick="window.print()" class="btn btn-outline-secondary btn-sm">
+        🖨️ Print
+</div>
+
+  <div class="card shadow-lg p-4">
+    <div class="row">
+      <!-- Image Column -->
+      <div class="col-md-4 text-center">
+        {% if suspect.picture %}
+          <img src="{{ suspect.picture.url }}" alt="Suspect Picture" class="img-thumbnail rounded mb-3" style="max-height: 300px;">
+        {% else %}
+          <p class="text-muted">No picture available</p>
+        {% endif %}
+      </div>
+
+      <!-- Details Column -->
+      <div class="col-md-8">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Full Name:</strong> {{ suspect.full_name }}</li>
+          <li class="list-group-item"><strong>Nickname:</strong> {{ suspect.nickname }}</li>
+          <li class="list-group-item"><strong>Date of Birth:</strong> {{ suspect.date_of_birth }}</li>
+          <li class="list-group-item"><strong>Gender:</strong> {{ suspect.gender }}</li>
+          <li class="list-group-item"><strong>Address:</strong> {{ suspect.address }}</li>
+          <li class="list-group-item"><strong>Phone Number:</strong> {{ suspect.phone_number }}</li>
+          <li class="list-group-item"><strong>Email:</strong> {{ suspect.email }}</li>
+          <li class="list-group-item"><strong>National ID:</strong> {{ suspect.national_id }}</li>
+          <li class="list-group-item"><strong>Crime Type:</strong> {{ suspect.crime_type }}</li>
+          <li class="list-group-item"><strong>Height:</strong> {{ suspect.height }}</li>
+          <li class="list-group-item"><strong>Weight:</strong> {{ suspect.weight }}</li>
+          <li class="list-group-item"><strong>Skin Color:</strong> {{ suspect.skin_color }}</li>
+          <li class="list-group-item"><strong>Hair Color:</strong> {{ suspect.hair_color }}</li>
+          <li class="list-group-item"><strong>Known Associates:</strong> {{ suspect.known_associates }}</li>
+          <li class="list-group-item"><strong>Previous Criminal Record:</strong> {{ suspect.previous_criminal_record }}</li>
+          <li class="list-group-item"><strong>Current Status:</strong> {{ suspect.current_status }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-end mt-4">
+      <a href="{% url 'suspect_list' %}" class="btn btn-outline-primary">← Back to Suspect List</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

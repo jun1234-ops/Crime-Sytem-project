@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block content %}
+<style>
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        width: 100%;
+        padding: 40px 20px 20px 20px;
+    }
+    .card{
+        cursor: pointer;
+    }
+    .card:hover .img-ctn img{
+        transform: scale(1.1);
+    }
+    .img-ctn img{
+        height: 200px;
+        transition: all 0.3s ease;
+    }
+    .img-ctn{
+        overflow: hidden;
+    }
+</style>
+    <h1 class="text-center">System Access Page</h1>
+    <!-- <ul>
+    <li><a href="{% url 'manage_users' %}">Manage Users</a></li>
+    <li><a href="{% url 'activity_log' %}">Activity Logs</a></li>
+</ul> -->
+    <div class="ctn">
+        <div class="container d-flex gap-5 mx-auto justify-content-center flex-wrap">
+            <div class="card mb-3 pt-2 col-12 col-md-3" style="width: 300px; padding-bottom: 10px;">
+                <h5 class="text-center">Manage Users</h5>
+                <div class="img-ctn">
+                    <img src="../../static/Reports/Images/premium_photo-1728313181613-man-users.avif" alt="" style="width: 100%;">
+                </div>
+                <div class="text mt-2 text-center">
+                    <p>Manage all Users at your own ease</p>
+                    <a href="{% url 'manage_users' %}">Manage Users</a>
+                </div>
+            </div>
+            <div class="card mb-3 pt-2 col-12 col-md-3" style="width: 300px; padding-bottom: 10px;">
+                <h5 class="text-center">Activity Logs</h5>
+                <div class="img-ctn">
+                    <img src="../../static/Reports/Images/istockphoto-2197730607-view-activity-2.webp" alt="" style="width: 100%;">
+                </div>
+                <div class="text mt-2 text-center">
+                    <p>View logs of all your activities</p>
+                    <a href="{% url 'activity_log' %}">View Activity Logs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="window.history.back();" style="margin-top: 20px; background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
+    Back
+</button>
+{% endblock %}

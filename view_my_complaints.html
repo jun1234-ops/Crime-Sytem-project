@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .ctn{
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      padding: 30px;
+      text-align: center;
+  }
+</style>
+  <div class="ctn">
+    <h2>My Complaints</h2>
+  {% if complaints %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Crime Type</th>
+          <th>Status</th>
+          <th>Date & Time</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for complaint in complaints %}
+        <tr>
+          <td>{{ complaint.crime_type }}</td>
+          <td>{{ complaint.complaint_status }}</td>
+          <td>{{ complaint.date_time_of_incident }}</td>
+          <td>{{ complaint.crime_description|truncatechars:100 }}</td>
+          <td>
+            <a href="{% url 'complaint_user_detail' complaint.id %}" class="btn btn-sm btn-primary">
+              View Details
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You have not submitted any complaints yet.</p>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Complaint Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        .complaint-section { margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 20px; }
+        .label { font-weight: bold; }
+        img { max-width: 400px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Complaint Report</h1>
+
+    {% for complaint in complaints %}
+    <div class="complaint-section">
+        <p><span class="label">Complainant Name:</span> {{ complaint.full_name }}</p>
+        <p><span class="label">Email:</span> {{ complaint.email }}</p>
+        <p><span class="label">Phone Number:</span> {{ complaint.phone_number }}</p>
+        <p><span class="label">Anonymous:</span> {% if complaint.is_anonymous %}Yes{% else %}No{% endif %}</p>
+        <p><span class="label">Crime Type:</span> {{ complaint.crime_type }}</p>
+        <p><span class="label">Description of Crime:</span> {{ complaint.crime_description }}</p>
+        <p><span class="label">Location of Crime:</span> {{ complaint.location }}</p>
+        <p><span class="label">Relationship with Victim:</span> {{ complaint.relationship }}</p>
+        <p><span class="label">Suspect Description:</span> {{ complaint.suspect_description }}</p>
+        <p><span class="label">Complaint Status:</span> {{ complaint.complaint_status }}</p>
+        <p><span class="label">Date and Time of Incident:</span> {{ complaint.date_time_of_incident }}</p>
+        
+        {% if complaint.evidence_url %}
+            <p><span class="label">Evidence:</span><br>
+            <img src="{{ complaint.evidence_url }}" alt="Evidence Image"></p>
+        {% else %}
+            <p><span class="label">Evidence:</span> No evidence provided.</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</body>
+</html>

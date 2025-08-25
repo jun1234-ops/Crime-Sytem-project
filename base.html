@@ -1,0 +1,99 @@
+<!-- core/templates/core/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Crime Tracking System{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-text text-white">
+            Welcome to Owerri Crime Tracking System - {{ user.username }}
+        </span>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link" style="display: inline; padding: 0; border: none; background: none; color: red; cursor: pointer;">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_login' %}">User Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_login' %}">Admin Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+            
+<div class="collapse navbar-collapse">
+    <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <!-- Admin Links -->
+                <li class="nav-item">
+    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="nav-link btn btn-link" style="display: inline; padding: 0; border: none; background: none; color: red; cursor: pointer;">
+            Logout
+        </button>
+    </form>
+</li>
+            {% else %}
+                <!-- User Links -->
+                <li class="nav-item">
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                          <button type="submit" class="btn btn-link nav-link" style="display: inline; padding: 0; color: white;" onclick="return confirm('Are you sure you want to logout?');">Logout</button>
+                        </button>
+                    </form>
+                </li>
+            {% endif %}
+        {% else %}
+            <!-- Public Links -->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_login' %}">User Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin_login' %}">Admin Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+
+    <div class="container mt-4 extend">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert" style="color: red; font-weight: bold;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        <!-- Page-specific content will go here -->
+        {% endblock %}
+    </div>
+</body>
+</html>

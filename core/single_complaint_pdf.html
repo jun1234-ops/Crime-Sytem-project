@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complaint Report</title>
+    <style>
+        body { font-family: sans-serif; font-size: 14px; margin: 2em; }
+        h2 { text-align: center; border-bottom: 1px solid #000; }
+        .section { margin-bottom: 1.5em; }
+        .label { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Complaint Report</h2>
+
+    <div class="section"><span class="label">Complainant:</span> {{ complaint.complainant_full_name }}</div>
+    <div class="section"><span class="label">Email:</span> {{ complaint.email }}</div>
+    <div class="section"><span class="label">Phone:</span> {{ complaint.phone_number }}</div>
+    <div class="section"><span class="label">Crime Type:</span> {{ complaint.crime_type }}</div>
+    <div class="section"><span class="label">Location:</span> {{ complaint.location_of_crime }}</div>
+    <div class="section"><span class="label">Emergency:</span> {{ complaint.is_emergency|yesno:"Yes,No" }}</div>
+    <div class="section"><span class="label">Status:</span> {{ complaint.complaint_status }}</div>
+    <div class="section"><span class="label">Description:</span><br>{{ complaint.crime_description }}</div>
+</body>
+</html>

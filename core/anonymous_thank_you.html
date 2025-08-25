@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-success text-center shadow-sm p-4">
+                <h3 class="mb-3">🎉 Thank You!</h3>
+                <p class="lead">Your anonymous complaint has been submitted successfully.</p>
+                <hr>
+                <a href="{% url 'user_login' %}" class="btn btn-primary mt-3 w-100">
+                    Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

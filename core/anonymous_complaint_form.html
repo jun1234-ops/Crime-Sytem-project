@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+    }
+    form{
+        color: black;
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4">Submit Anonymous Complaint</h2>
+    <p class=" text-center">
+        You can report a crime without revealing your identity. Please complete the form below with accurate details.
+    </p>
+
+    <form method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-lg bg-light needs-validation " novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+{% for field in form %}
+    {% if field.name == 'witnessed_directly' %}
+        <div class="form-check mb-3">
+            {{ field }}
+            <label class="form-check-label ms-2" for="{{ field.id_for_label }}">
+                Did you witness the incident directly?
+            </label>
+            <div class="text-danger">{{ field.errors }}</div>
+        </div>
+    {% elif field.name == 'is_emergency' %}
+        <div class="form-check mb-3">
+            {{ field }}
+            <label class="form-check-label ms-2" for="{{ field.id_for_label }}">
+                Is this matter urgent?
+            </label>
+            <div class="text-danger">{{ field.errors }}</div>
+        </div>
+    {% elif field.field.widget.input_type == 'checkbox' %}
+        <div class="form-check mb-3">
+            {{ field }}
+            {{ field.label_tag }}
+            <div class="text-danger">{{ field.errors }}</div>
+        </div>
+    {% else %}
+        <div class="mb-3">
+            {{ field.label_tag }}
+            {{ field }}
+            <div class="text-danger">{{ field.errors }}</div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-danger w-100">
+                Submit Anonymous Complaint
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

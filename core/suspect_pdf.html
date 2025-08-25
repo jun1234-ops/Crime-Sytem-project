@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Suspect PDF</title>
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 6px;
+            border: 1px solid #333;
+            text-align: left;
+            vertical-align: top;
+        }
+        img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h2>Suspect List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th>Full Name</th>
+                <th>Nickname</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>National ID</th>
+                <th>Crime Type</th>
+                <th>Known Associates</th>
+                <th>Previous Criminal Record</th>
+                <th>Current Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in suspects %}
+            <tr>
+                <td>
+                    {% if s.picture %}
+                        <img src="file://{{ s.picture.path }}" alt="Image">
+                    {% else %}
+                        No image
+                    {% endif %}
+                </td>
+                <td>{{ s.full_name }}</td>
+                <td>{{ s.nickname }}</td>
+                <td>{{ s.date_of_birth|default:"" }}</td>
+                <td>{{ s.gender }}</td>
+                <td>{{ s.address }}</td>
+                <td>{{ s.phone_number }}</td>
+                <td>{{ s.email }}</td>
+                <td>{{ s.national_id }}</td>
+                <td>{{ s.crime_type }}</td>
+                <td>{{ s.known_associates }}</td>
+                <td>{{ s.previous_criminal_record }}</td>
+                <td>{{ s.current_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

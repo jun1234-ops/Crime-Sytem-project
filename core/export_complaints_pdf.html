@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><style>body { font-family: Arial; font-size: 12px; }</style></head>
+<body>
+    <h2>All Complaints</h2>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Complainant</th>
+                <th>Crime</th>
+                <th>Status</th>
+                <th>Emergency</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.complainant_full_name }}</td>
+                <td>{{ complaint.crime_type }}</td>
+                <td>{{ complaint.complaint_status }}</td>
+                <td>{% if complaint.is_emergency %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

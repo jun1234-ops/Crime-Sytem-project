@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🔍 Anonymous Complaint Detail</h2>
+        <button class="btn btn-outline-secondary" onclick="window.print()">🖨️ Print</button>
+    </div>
+
+    <div class="card shadow p-4 mb-5">
+        <h5 class="text-muted fst-italic mb-4">
+            Submitted Anonymously on {{ complaint.submitted_at|date:"D, M d Y - H:i" }}
+        </h5>
+
+        <dl class="row">
+            <dt class="col-sm-4">📅 Incident Date & Time</dt>
+            <dd class="col-sm-8">{{ complaint.incident_datetime|date:"D, M d Y - H:i" }}</dd>
+
+            <dt class="col-sm-4">⚖️ Crime Type</dt>
+            <dd class="col-sm-8">{{ complaint.crime_type|default:"Not specified" }}</dd>
+
+            <dt class="col-sm-4">📝 Crime Description</dt>
+            <dd class="col-sm-8">{{ complaint.crime_description|linebreaks|default:"No description provided." }}</dd>
+
+            <dt class="col-sm-4">🧍 Suspect Description</dt>
+            <dd class="col-sm-8">{{ complaint.suspect_description|linebreaks|default:"Not provided." }}</dd>
+
+            <dt class="col-sm-4">📍 Location of Crime</dt>
+            <dd class="col-sm-8">{{ complaint.location_of_crime|default:"Not provided" }}</dd>
+
+            <dt class="col-sm-4">📎 Evidence Provided</dt>
+            <dd class="col-sm-8">{{ complaint.evidence_provided|linebreaks|default:"None submitted." }}</dd>
+
+            <dt class="col-sm-4">🚨 Crime Severity Estimate</dt>
+            <dd class="col-sm-8">{{ complaint.severity|default:"Not indicated" }}</dd>
+
+            <dt class="col-sm-4">👀 Witnessed Directly?</dt>
+            <dd class="col-sm-8">
+                {% if complaint.witnessed %}
+                    <span class="text-success">Yes</span>
+                {% else %}
+                    <span class="text-muted">No</span>
+                {% endif %}
+            </dd>
+
+            <dt class="col-sm-4">👥 Reporter Relationship</dt>
+            <dd class="col-sm-8">{{ complaint.reporter_relationship|default:"Not specified" }}</dd>
+
+            <dt class="col-sm-4">⏱️ Urgent Matter?</dt>
+            <dd class="col-sm-8">
+                {% if complaint.is_emergency %}
+                    <span class="text-danger fw-bold">Yes</span>
+                {% else %}
+                    <span class="text-muted">No</span>
+                {% endif %}
+            </dd>
+
+            <dt class="col-sm-4">💬 Preferred Response Channel</dt>
+            <dd class="col-sm-8">{{ complaint.preferred_response_channel|default:"Not stated" }}</dd>
+
+            <dt class="col-sm-4">🗒️ Other Notes</dt>
+            <dd class="col-sm-8">{{ complaint.other_notes|linebreaks|default:"None" }}</dd>
+        </dl>
+    </div>
+</div>
+{% endblock %}

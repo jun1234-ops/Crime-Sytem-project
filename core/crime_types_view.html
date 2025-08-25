@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  body{
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #Fff;
+  }
+  table tr{
+    cursor: pointer;
+  }
+  .table tbody tr:hover{
+    background-color: rgb(73, 73, 73);
+    color: #fff;
+  }
+</style>
+<h2 class="text-center">Crime Types</h2>
+
+<form method="get" class="mb-3 text-black">
+  <label>Filter by Category:</label>
+ <select name="category">
+  <option value="">All</option>
+  <option value="violent" {% if filter_category == "violent" %}selected{% endif %}>Violent</option>
+  <option value="property" {% if filter_category == "property" %}selected{% endif %}>Property</option>
+  <option value="cyber" {% if filter_category == "cyber" %}selected{% endif %}>Cyber</option>
+  <option value="fraud" {% if filter_category == "fraud" %}selected{% endif %}>Fraud</option>
+  <option value="other" {% if filter_category == "other" %}selected{% endif %}>Other</option>
+</select>
+
+
+  <label>Severity:</label>
+  <select name="severity">
+    <option value="">All</option>
+    <option value="low"{% if filter_category == "low" %}selected{% endif %}>Low</option>
+    <option value="medium"{% if filter_category == "medium" %}selected{% endif %}>Medium</option>
+    <option value="high"{% if filter_category == "high" %}selected{% endif %}>High</option>
+  </select>
+
+  <button type="submit">Filter</button>
+</form>
+
+{% if crime_types %}
+  <div style="overflow-x: auto;">
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Crime</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Severity</th>
+        <th>Penalty</th>
+        <th id="b">Law Ref</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for crime in crime_types %}
+        <tr>
+          <td>{{ crime.crime_name }}</td>
+          <td>{{ crime.description }}</td>
+          <td>{{ crime.get_category_display }}</td>
+          <td>{{ crime.get_severity_display }}</td>
+          <td>{{ crime.penalty|default:'—' }}</td>
+          <td>{{ crime.law_reference|default:'—' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  </div>
+{% else %}
+  <p>No crimes match the selected filters.</p>
+{% endif %}
+{% endblock %}

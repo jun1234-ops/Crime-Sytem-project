@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    @media (max-width:1000px) {
+        .links{
+            display: none;
+        }
+    }
+    @media (min-width:1001px) {
+        .nav-menu .bars div{
+            display: none;
+        }
+    }
+    .nav{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .nav-menu .bars{
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        cursor: pointer;
+    }
+    .nav-menu .bars div{
+        background-color: #fff;
+        height: 3px;
+        border-radius: 5px;
+        width: 20px;
+    }
+    .dropdown{
+        display: none;
+        position: absolute;
+        top: 30px;
+        left: 0px;
+        min-width: 140px;
+        z-index: 1;
+        border: 2px solid black;
+        background-color: black;
+    }
+    .dropdown a {
+        width: 100%;
+        border: none;
+    }
+    .togs{
+        display: block;
+    }
+    .nav-menu .bars:hover .dropdown{
+        display: block;
+    }
+    .ctn{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        width: 100%;
+        color: #fff;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    tr{
+        cursor: pointer;
+    }
+</style>
+    <div class="ctn">
+        <div class="container my-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>📋 Criminal List</h2>
+                <div class="nav">
+                    <div class="links">
+                        <a href="{% url 'export_criminals_pdf' %}" class="btn btn-danger me-2">📄 Export to PDF</a>
+                        <a href="{% url 'export_criminals_excel' %}" class="btn btn-success me-2">📊 Export to Excel</a>
+                        <a href="{% url 'export_criminals_word' %}" class="btn btn-primary">📝 Export to Word</a>
+                    </div>
+                    <div class="nav-menu" style="position: relative;">
+                        <div class="bars">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div class="dropdown">
+                            <a href="{% url 'export_criminals_pdf' %}" class="btn btn-danger me-2">📄 Export to PDF</a>
+                            <a href="{% url 'export_criminals_excel' %}" class="btn btn-success me-2">📊 Export to Excel</a>
+                            <a href="{% url 'export_criminals_word' %}" class="btn btn-primary">📝 Export to Word</a>
+                        </div>
+                    </div>
+                    <button onclick="window.print()" class="btn btn-outline-light btn-sm mt-3" style="height: 40px;">
+                        🖨️ Print
+                    </button> 
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="table-success">
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Criminal ID</th>
+                            <th>DOB</th>
+                            <th>Gender</th>
+                            <th>Phone</th>
+                            <th>Crime Type</th>
+                            <th>Conviction Date</th>
+                            <th>Sentence</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for criminal in criminals %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ criminal.full_name }}</td>
+                            <td>{{ criminal.criminal_id_number }}</td>
+                            <td>{{ criminal.date_of_birth }}</td>
+                            <td>{{ criminal.gender }}</td>
+                            <td>{{ criminal.phone_number }}</td>
+                            <td>{{ criminal.crime_type }}</td>
+                            <td>{{ criminal.date_of_conviction }}</td>
+                            <td>{{ criminal.sentence_details|truncatewords:5 }}</td>
+                            <td>
+                                <a href="{% url 'criminal_detail' criminal.id %}" class="btn btn-sm btn-info">View</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="10" class="text-center">No criminal records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<script>
+    let icon = document.querySelector(".nav-menu .bars");
+    let dropdown = document.querySelector(".nav-menu .dropdown")
+    icon.addEventListener("click", ()=> {
+        dropdown.classList.toggle("togs");
+    })
+</script>
+{% endblock %}

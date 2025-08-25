@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .col-md-6 input:focus, .form-control:focus, .mb-3 input:focus{
+        box-shadow: none;
+        outline: none;
+        border: 1px solid black;
+    }
+    .container{
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    .card{
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    @media (max-width:427px) {
+        .card{
+            max-width: 300px;
+        }
+        form{
+            max-width: 250px; 
+        }
+    }
+    @media (max-width:575px) {
+        .container{
+            margin: 0;
+            margin-bottom: 30px;
+        }
+    }
+    @media (min-width:768px) {
+        .card{
+            max-width: 500px;
+        }
+    }
+    @media (min-width:1024px) {
+        .card{
+            max-width: 600px;
+        }
+    }
+</style>
+<div class="container mt-5 mb-5">
+    <div class="card p-4 shadow-lg rounded">
+        <h2 class="mb-4 text-center">Complaint form</h2>
+
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        {% endif %} 
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+
+             {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li><strong>{{ field.label }}</strong>: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="id_full_name" class="form-label">Full Name</label>
+                    {{ form.full_name }}
+                </div>
+                <div class="col-md-6">
+                    <label for="id_phone_number" class="form-label">Phone Number</label>
+                    {{ form.phone_number }}
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="id_email" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-md-6">
+                    <label for="id_date_time_of_incident" class="form-label">Date & Time of Incident</label>
+                    {{ form.date_time_of_incident }}
+
+                </div>
+            </div>
+
+            <input type="text" name="crime_type" list="crime-catalog-list" class="form-control" placeholder="Type or select a crime type">
+           <datalist id="crime-catalog-list">
+                {% for crime in crime_catalog_list %}
+                <option value="{{ crime }}">
+                   {% endfor %}
+            </datalist>
+
+
+            <div class="mb-3">
+                <label for="id_crime_description" class="form-label">Crime Description</label>
+                {{ form.crime_description }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_relationship" class="form-label">Relationship to Incident</label>
+                {{ form.relationship }}
+
+            </div>
+
+            <div class="mb-3">
+                <label for="id_location" class="form-label">Location of Crime</label>
+                {{ form.location }}
+
+            </div>
+
+            <div class="mb-3">
+                <label for="id_suspect_description" class="form-label">Suspect Description (Optional)</label>
+                {{ form.suspect_description }}
+
+            </div>
+
+            <div class="mb-3">
+                <label for="id_evidence" class="form-label">Evidence (Photo, Video, Document)</label>
+                {{ form.evidence }}
+
+            </div>
+
+            <div class="mb-3">
+                <label for="id_complaint_status" class="form-label">Complaint Status</label>
+                {{ form.complaint_status }}
+            </div>
+            
+           <button type="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <a href="{% url 'file_menu' %}" class="btn btn-danger" style="padding-top: 10px;text-decoration: none;">Close</a>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
